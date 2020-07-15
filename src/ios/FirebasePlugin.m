@@ -153,7 +153,8 @@ static NSDictionary* googlePlist;
         [[FIRInstanceID instanceID] instanceIDWithHandler:^(FIRInstanceIDResult * _Nullable result,
                                                             NSError * _Nullable error) {
             if (result.token != nil && error == nil) {
-                [self sendToken:result.token];
+                CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:result.token];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
             }else{
                 [self handleStringResultWithPotentialError:error command:command result:result.token];
             }
